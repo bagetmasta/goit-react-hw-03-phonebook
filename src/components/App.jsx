@@ -16,6 +16,24 @@ export class App extends Component {
     filter: '',
   };
 
+  componentDidMount() {
+    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+
+    // this.setState({
+    //   contacts: JSON.parse(localStorage.getItem('contacts')),
+    // });
+  }
+
+  componentDidUpdate(_, prevState) {
+    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+
+    // if (prevState.contacts.length !== this.state.contacts.length) {
+    //   this.setState({
+    //     contacts: JSON.parse(localStorage.getItem('contacts')),
+    //   });
+    // }
+  }
+
   addContact = ({ name, number }) => {
     const oneContact = {
       id: nanoid(),
@@ -55,6 +73,7 @@ export class App extends Component {
   getVisibleContacts = () => {
     const { contacts, filter } = this.state;
     const normalizedFilter = filter.toLowerCase();
+    // const parsedContacts = JSON.parse(localStorage.getItem('contacts'));
 
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(normalizedFilter)
