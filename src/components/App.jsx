@@ -17,21 +17,18 @@ export class App extends Component {
   };
 
   componentDidMount() {
-    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-
-    // this.setState({
-    //   contacts: JSON.parse(localStorage.getItem('contacts')),
-    // });
+    JSON.parse(localStorage.getItem('contacts')) &&
+      this.setState({
+        contacts: JSON.parse(localStorage.getItem('contacts')),
+      });
   }
 
   componentDidUpdate(_, prevState) {
-    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    const { contacts } = this.state;
 
-    // if (prevState.contacts.length !== this.state.contacts.length) {
-    //   this.setState({
-    //     contacts: JSON.parse(localStorage.getItem('contacts')),
-    //   });
-    // }
+    if (prevState.contacts.length !== contacts.length) {
+      localStorage.setItem('contacts', JSON.stringify(contacts));
+    }
   }
 
   addContact = ({ name, number }) => {
@@ -73,7 +70,6 @@ export class App extends Component {
   getVisibleContacts = () => {
     const { contacts, filter } = this.state;
     const normalizedFilter = filter.toLowerCase();
-    // const parsedContacts = JSON.parse(localStorage.getItem('contacts'));
 
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(normalizedFilter)
