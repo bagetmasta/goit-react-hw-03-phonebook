@@ -44,12 +44,10 @@ export class App extends Component {
   checkForSameName = oneContact => {
     const { contacts } = this.state;
 
-    for (const contact of contacts) {
-      if (contact.name.toLowerCase() === oneContact.name.toLowerCase()) {
-        alert(`${oneContact.name} is already in contacts`);
+    if (contacts.find(contact => contact.name === oneContact.name)) {
+      alert(`${oneContact.name} is already in contacts`);
 
-        return;
-      }
+      return;
     }
 
     this.setState(({ contacts }) => ({
